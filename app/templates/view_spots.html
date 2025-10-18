@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-grid-3x3-gap-fill btn-icon"></i>Spots in {{ lot.prime_location_name }}</h1>
+     <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{{ url_for('main.admin_dashboard') }}" class="btn btn-sm btn-outline-secondary">
+           <i class="bi bi-arrow-left btn-icon"></i> Back to Admin Dashboard
+        </a>
+    </div>
+</div>
+
+<p>
+    <strong>Address:</strong> {{ lot.address }}, {{ lot.pin_code }}<br>
+    <strong>Pricing:</strong> ₹20 for first hour, ₹10 for each additional hour<br>
+    <strong>Capacity:</strong> {{ lot.maximum_number_of_spots }} spots
+</p>
+
+<div class="mt-4">
+    {% if spots %}
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-2">
+            {% for spot_data in spots %}
+            <div class="col">
+                <div class="card text-center spot {{ 'spot-available' if spot_data.status == 'A' else 'spot-occupied' }}">
+                    <div class="card-body p-2">
+                        <h6 class="card-title mb-1">{{ spot_data.identifier }}</h6>
+                        <small class="d-block">
+                            {% if spot_data.status == 'A' %}
+                                Available
+                            {% else %}
+                                Occupied {% if spot_data.username %}(by {{ spot_data.username }}){% endif %}
+                            {% endif %}
+                        </small>
+                        {% if spot_data.status == 'A' %}
+                            <form method="POST" action="{{ url_for('main.delete_parking_spot', spot_id=spot_data.id) }}" class="mt-2" onsubmit="return confirm('Are you sure you want to delete spot {{ spot_data.identifier }}?');">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-xs btn-outline-light border-light py-0 px-1" style="font-size: 0.7rem;">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+          No spots found for this parking lot. This might happen if the lot was just created or edited.
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

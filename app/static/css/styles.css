@@ -1,0 +1,566 @@
+/* Reset / Base Styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #6a11cb; /* Deep Purple */
+    --secondary-color: #2575fc; /* Bright Blue */
+    --accent-color: #00d4ff; /* Light Cyan */
+    --background-color: #2F4F4F; /* Changed to DarkSlateGray */
+    --surface-color: #FFFFFF; /* Changed to solid white for better contrast */
+    --text-color: #f8f9fa; /* Changed to light text for dark background */
+    --text-muted-color: #adb5bd; /* Lighter muted text */
+    --border-color: rgba(255, 255, 255, 0.15); /* Slightly more visible border */
+    --shadow-color: rgba(0, 0, 0, 0.4); /* Slightly darker shadow */
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --text-color-light: #f8f9fa; /* Very light gray / almost white */
+
+    --border-radius: 12px;
+    --transition-speed: 0.3s;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--background-color); /* Use the updated background color */
+    color: var(--text-color); /* Use light text color */
+    line-height: 1.6;
+    margin: 0;
+    padding-top: 85px; /* Adjust for fixed navbar - Slight Increase */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 15px;
+    flex-grow: 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-color-light); /* Use light text color for headings */
+}
+
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color var(--transition-speed) ease;
+}
+
+a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+/* Navbar */
+.navbar {
+    background: rgba(47, 79, 79, 0.75); /* DarkSlateGray Glassmorphism (adjusted alpha) */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25); /* Adjusted shadow */
+    padding: 0rem 1.5rem; /* Minimal vertical padding */
+    min-height: auto; /* Allow navbar to shrink further */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: background var(--transition-speed) ease;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.1rem; /* Reduced brand font size */
+    color: var(--accent-color); /* Use accent color for brand */
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand img {
+    height: 20px; /* Reduced icon size */
+    margin-right: 10px;
+    transition: transform var(--transition-speed) ease-in-out;
+}
+
+.navbar-brand:hover img {
+    transform: rotate(15deg) scale(1.1);
+}
+
+.navbar-nav .nav-link {
+    color: var(--text-color-light); /* Light text for nav links */
+    font-weight: 500;
+    margin-left: 1rem;
+    transition: color var(--transition-speed) ease;
+    position: relative;
+    padding-top: 0.2rem; /* Added small top padding */
+    padding-bottom: 0.2rem; /* Reduced bottom padding */
+    font-size: 0.9rem; /* Reduced nav link font size */
+}
+
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    transition: width var(--transition-speed) ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: var(--accent-color); /* Use accent color for hover/active */
+}
+
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active::after {
+    width: 100%;
+}
+
+/* Cards */
+.card {
+    background: rgba(47, 79, 79, 0.9); /* Increased opacity for better contrast */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 20px var(--shadow-color);
+    margin-bottom: 1.5rem;
+    overflow: hidden; /* Ensure content respects border-radius */
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    backdrop-filter: blur(5px); /* Subtle blur for dark card */
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px var(--shadow-color);
+}
+
+.card-header {
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    font-weight: 600;
+    padding: 1rem 1.5rem;
+    border-bottom: none; /* Remove default border */
+}
+
+.card-body {
+    padding: 1.5rem;
+    color: var(--text-color-light); /* Ensure body text is light */
+}
+
+.card-body p,
+.card-body span,
+.card-body div {
+    color: var(--text-color-light); /* Explicitly set light color for common elements */
+}
+
+.card-body .text-muted {
+    color: var(--text-muted-color) !important; /* Ensure muted text uses the correct light muted color */
+}
+
+.card-title {
+    color: var(--accent-color); /* Use accent color for card titles */
+    margin-bottom: 1rem;
+}
+
+/* Buttons */
+.btn {
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    border: none;
+    transition: all var(--transition-speed) ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    opacity: 0;
+    transition: opacity var(--transition-speed) ease;
+    z-index: -1;
+}
+
+.btn:hover::before {
+    opacity: 1;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    box-shadow: 0 4px 10px rgba(106, 17, 203, 0.4);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 6px 15px rgba(106, 17, 203, 0.6);
+    color: white; /* Ensure text color remains white on hover */
+}
+
+.btn-secondary {
+    background-color: var(--text-muted-color);
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+.btn-success { background-color: var(--success-color); color: white; }
+.btn-danger { background-color: var(--danger-color); color: white; }
+.btn-warning { background-color: var(--warning-color); color: #333; }
+.btn-info { background-color: var(--info-color); color: white; }
+
+.btn-success:hover { background-color: #218838; color: white; }
+.btn-danger:hover { background-color: #c82333; color: white; }
+.btn-warning:hover { background-color: #e0a800; color: #333; }
+.btn-info:hover { background-color: #138496; color: white; }
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+/* Forms */
+.form-control,
+.form-select {
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    padding: 0.75rem 1rem;
+    transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white */
+    color: var(--text-color-light); /* Light text in forms */
+    /* Add custom arrow for dark theme */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23adb5bd' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    appearance: none; /* Remove default system appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: var(--text-muted-color);
+  opacity: 1; /* Firefox */
+}
+
+.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: var(--text-muted-color);
+}
+
+.form-control::-ms-input-placeholder { /* Microsoft Edge */
+  color: var(--text-muted-color);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 212, 255, 0.25); /* Accent color focus */
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.2); /* Slightly lighter on focus */
+}
+
+/* Style options - Note: Limited styling capabilities across browsers */
+.form-select option {
+    background-color: #343a40; /* Dark background for options */
+    color: var(--text-color-light); /* Light text for options */
+}
+
+/* Tables */
+.table {
+    background-color: rgba(47, 79, 79, 0.9); /* Increased opacity to match cards */
+    border-radius: var(--border-radius);
+    overflow: hidden; /* Clip content to rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Adjusted shadow */
+    margin-bottom: 1.5rem;
+    width: 100%;
+    border-collapse: collapse; /* Use collapse for cleaner lines */
+    color: var(--text-color-light); /* Light text in tables */
+    border-style: hidden; /* Hide default borders when using rounded corners */
+}
+
+.table th,
+.table td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-top: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.table thead th {
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    font-weight: 600;
+    border-top: none; /* Remove top border for header */
+    border-bottom: 2px solid var(--border-color); /* Add a slightly thicker bottom border */
+}
+
+/* Override Bootstrap table-striped for dark theme */
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    background-color: rgba(255, 255, 255, 0.05); /* Slightly lighter dark shade for odd rows */
+    color: var(--text-color-light);
+}
+
+.table-striped > tbody > tr:nth-of-type(even) > * {
+    background-color: transparent; /* Use the base table background for even rows */
+    color: var(--text-color-light);
+}
+
+.table tbody tr:hover > * {
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle light hover effect - Applied to all cells in row */
+    color: var(--text-color-light);
+}
+
+/* Badges */
+.badge {
+    padding: 0.4em 0.8em;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: 0.8em;
+}
+
+.bg-success { background: linear-gradient(45deg, #28a745, #218838); color: white; }
+.bg-danger { background: linear-gradient(45deg, #dc3545, #c82333); color: white; }
+.bg-warning { background: linear-gradient(45deg, #ffc107, #e0a800); color: #333; }
+.bg-info { background: linear-gradient(45deg, #17a2b8, #138496); color: white; }
+.bg-primary { background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); color: white; }
+.bg-secondary { background: linear-gradient(45deg, #6c757d, #5a6268); color: white; }
+
+
+/* Alerts */
+.alert {
+    border-radius: var(--border-radius);
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    border: none; /* Remove default border */
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.alert::before { /* Gradient overlay */
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0.8;
+    z-index: -1;
+}
+
+.alert-success { background-color: var(--success-color); }
+.alert-danger { background-color: var(--danger-color); }
+.alert-warning { background-color: var(--warning-color); color: #333; } /* Darker text for warning */
+.alert-info { background-color: var(--info-color); }
+
+.alert-success::before { background: linear-gradient(45deg, #28a745, #58f57a); }
+.alert-danger::before { background: linear-gradient(45deg, #dc3545, #ff5b6c); }
+.alert-warning::before { background: linear-gradient(45deg, #ffc107, #ffe082); }
+.alert-info::before { background: linear-gradient(45deg, #17a2b8, #59d4e8); }
+
+.alert .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%); /* Make close button visible */
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1rem 0; /* Reduced vertical padding */
+    margin-top: 2rem;
+    background: rgba(0, 0, 0, 0.4); /* Slightly darker footer */
+    color: var(--text-muted-color);
+    font-size: 0.9em;
+}
+
+/* Utility Classes */
+.text-primary { color: var(--primary-color) !important; }
+.text-secondary { color: var(--secondary-color) !important; }
+.text-success { color: var(--success-color) !important; }
+.text-danger { color: var(--danger-color) !important; }
+.text-warning { color: var(--warning-color) !important; }
+.text-info { color: var(--info-color) !important; }
+.text-light { color: #f8f9fa !important; }
+.text-dark { color: #343a40 !important; }
+.text-muted { color: var(--text-muted-color) !important; }
+
+.mt-5 { margin-top: 3rem !important; }
+.mb-4 { margin-bottom: 1.5rem !important; }
+.p-4 { padding: 1.5rem !important; }
+.p-5 { padding: 3rem !important; }
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card, .alert, .table {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .navbar-nav {
+        margin-top: 1rem;
+    }
+    .navbar-nav .nav-link {
+        margin-left: 0;
+        padding: 0.5rem 0;
+    }
+    body {
+        padding-top: 80px; /* Adjust for potentially smaller navbar - Slight Increase */
+    }
+}
+
+@media (max-width: 768px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.75rem; }
+    .container { margin: 1rem auto; }
+    .card-body, .alert, .table th, .table td { padding: 1rem; }
+    .btn { padding: 0.6rem 1.2rem; }
+}
+
+/* Specific Page Styles (Example) */
+
+/* Index page hero section text */
+.px-4.py-5.my-5.text-center p.lead {
+    color: var(--text-muted-color); /* Use lighter muted color */
+    opacity: 0.9; /* Slightly less prominent than heading */
+}
+
+/* Ensure border under 'Available Parking Locations' is visible */
+#featured-lots h2.border-bottom {
+    border-bottom-color: var(--border-color) !important; /* Use light border color */
+}
+
+.login-card, .register-card {
+    max-width: 500px;
+    margin: 3rem auto;
+}
+
+.dashboard-stats .card {
+    text-align: center;
+}
+
+.dashboard-stats .card-body h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-color); /* Use accent color for stats */
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-stats .card-body p {
+    font-size: 1rem;
+    color: var(--text-muted-color);
+    margin-bottom: 0;
+}
+
+/* Ensure WTF-Forms render correctly */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* Remove any potential leftover Neumorphic styles */
+body, .card, .btn, .form-control, .form-select, .table, .navbar {
+    text-shadow: none; /* Remove text shadows if any */
+}
+
+/* Remove specific neumorphic box-shadows if they exist */
+.neumorphic-shadow-inset, .neumorphic-shadow-outset {
+    box-shadow: none !important;
+}
+
+/* Home page specific background */
+.home-page-background {
+    background-image: url('https://images.unsplash.com/photo-1543465077-db45d34b88a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80'); /* Example parking lot image */
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Keep the background fixed during scroll */
+}
+
+/* Add an overlay to improve text readability on the home page */
+.home-page-background::before {
+    content: '';
+    position: fixed; /* Use fixed to cover the whole viewport */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(47, 79, 79, 0.7); /* DarkSlateGray overlay with 70% opacity */
+    z-index: -1; /* Place the overlay behind the content but above the background image */
+}
+
+/* Ensure body background color doesn't interfere when image is present */
+body.home-page-background {
+    background-color: transparent; /* Remove solid background color on home page */
+}
+
+/* Spot Styling */
+.spot {
+    border: none;
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.spot:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.spot .card-title {
+    font-size: 1rem; /* Adjust title size if needed */
+    font-weight: 600;
+    color: white; /* Ensure title is white */
+    margin-bottom: 0.25rem;
+}
+
+.spot small {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.85); /* Slightly transparent white for status */
+}
+
+.spot-available {
+    background: linear-gradient(135deg, var(--success-color), #1e7e34); /* Green gradient */
+    color: white;
+}
+
+.spot-occupied {
+    background: linear-gradient(135deg, var(--danger-color), #a71d2a); /* Red gradient */
+    color: white;
+}
+
+/* Style the small delete button on available spots */
+.spot-available .btn-outline-light {
+    color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.5);
+    transition: all 0.2s ease;
+}
+
+.spot-available .btn-outline-light:hover {
+    color: white;
+    border-color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+}

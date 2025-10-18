@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% import "bootstrap_wtf.html" as wtf %} {% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+             <div class="card-header bg-success text-white">
+                <h4 class="mb-0"><i class="bi bi-person-plus-fill btn-icon"></i>Register New User</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" action="{{ url_for('main.register') }}" novalidate>
+                    {{ form.hidden_tag() }} <div class="mb-3">
+                        {{ form.username.label(class="form-label") }}
+                        {{ form.username(class="form-control form-control-lg", placeholder="Choose a username") }}
+                         {% for error in form.username.errors %}
+                            <span class="text-danger small">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.password.label(class="form-label") }}
+                        {{ form.password(class="form-control form-control-lg", placeholder="Create a password (min 6 chars)") }}
+                         {% for error in form.password.errors %}
+                            <span class="text-danger small">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                     <div class="mb-3">
+                        {{ form.confirm_password.label(class="form-label") }}
+                        {{ form.confirm_password(class="form-control form-control-lg", placeholder="Confirm your password") }}
+                         {% for error in form.confirm_password.errors %}
+                            <span class="text-danger small">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        {{ form.submit(class="btn btn-success btn-lg") }}
+                    </div>
+                </form>
+                 <p class="text-center mt-3 mb-0">
+                    Already have an account?
+                    <a href="{{ url_for('main.login') }}" class="text-decoration-none">
+                        Login here
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

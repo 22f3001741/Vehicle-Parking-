@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="px-4 py-5 my-5 text-center">
+    <img class="d-block mx-auto mb-4" src="{{ url_for('static', filename='images/parking-icon.svg') }}" alt="Parking Icon" width="72" height="72"> <h1 class="display-5 fw-bold">Vehicle Parking App</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">Manage parking lots and reserve your spot easily. Find available parking near you or manage your lots as an administrator.</p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        {% if current_user.is_authenticated %}
+            {% if current_user.is_admin %}
+                 <a href="{{ url_for('main.admin_dashboard') }}" class="btn btn-primary btn-lg px-4 gap-3">Go to Admin Dashboard</a>
+            {% else %}
+                 <a href="{{ url_for('main.user_dashboard') }}" class="btn btn-primary btn-lg px-4 gap-3">Go to My Dashboard</a>
+            {% endif %}
+             <a href="{{ url_for('main.logout') }}" class="btn btn-outline-secondary btn-lg px-4">Logout</a>
+        {% else %}
+            <a href="{{ url_for('main.login') }}" class="btn btn-primary btn-lg px-4 gap-3">Login</a>
+            <a href="{{ url_for('main.register') }}" class="btn btn-primary btn-lg px-4">Register</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% if parking_lots %}
+  <div class="container px-4 py-5" id="featured-lots">
+    <h2 class="pb-2 border-bottom text-center">Available Parking Locations</h2>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+      {% for lot in parking_lots %}
+      <div class="feature col">
+        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-2 rounded">
+           <i class="bi bi-geo-alt-fill"></i>
+        </div>        <h3 class="fs-4">{{ lot.prime_location_name }}</h3>
+        <p>Address: {{ lot.address }}, {{ lot.pin_code }}<br>
+           Price: ₹20 for first hour, ₹10 for each additional hour<br>
+           Total Spots: {{ lot.maximum_number_of_spots }}
+        </p>
+         <a href="{{ url_for('main.login') }}" class="icon-link"> Login to book
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+{% endblock %}
